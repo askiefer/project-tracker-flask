@@ -48,7 +48,14 @@ def success():
     """Renders successful submission template."""
 
     return render_template("success.html")
-    
+
+@app.route("/project")
+def get_project_info():
+    """Retrieve project information"""
+
+    project_title = request.args.get('title')
+    project_title, description, max_grade = hackbright.get_project_by_title(project_title)
+    return render_template('project_info.html', project_title=project_title, description=description, max_grade=max_grade)
 
 if __name__ == "__main__":
     hackbright.connect_to_db(app)
